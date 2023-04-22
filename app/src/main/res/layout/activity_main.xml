@@ -120,11 +120,11 @@
         android:textColor="@color/black" />
 
     <Button
-        android:id="@+id/submit_btn"
+        android:id="@+id/restart_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/choices_layout"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="171dp"
-        android:text="Submit" />
+        android:text="restart" />
 </RelativeLayout>

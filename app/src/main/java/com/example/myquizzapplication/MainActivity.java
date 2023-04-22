@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView GoodAnswersTextView;
     TextView questionTextView;
     Button ansA,ansB,ansC,ansD;
-    Button submitbtn;
+    Button restartbtn;
 
     int score =0;
     int totalQuestion = QuestionAnswer.questionAnswer.question.length;
@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ansB = findViewById(R.id.ans_B);
         ansC = findViewById(R.id.ans_C);
         ansD = findViewById(R.id.ans_D);
-        submitbtn = findViewById(R.id.submit_btn);
+        restartbtn = findViewById(R.id.restart_btn);
 
 
         ansA.setOnClickListener(submitOnclickList);
         ansB.setOnClickListener(submitOnclickList);
         ansC.setOnClickListener(submitOnclickList);
         ansD.setOnClickListener(submitOnclickList);
-        submitbtn.setOnClickListener(this);
+        restartbtn.setOnClickListener(restartOnclickList);
 
         totalQuestionsTextView.setText("Total question : "+totalQuestion);
 
@@ -73,9 +73,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (QuestionAnswer.questionAnswer.correctAnswers[currentQuestionIndex].equals(answer)){
             ++score;
-            ++currentQuestionIndex;
-            loadNewQuestion();
         }
+        ++currentQuestionIndex;
+        if ( currentQuestionIndex == totalQuestion ) clearQuestion();
+        else loadNewQuestion();
     };
+    private View.OnClickListener restartOnclickList = view -> {
+        finish();
+        startActivity(getIntent());
+    };
+    private void clearQuestion() {
+            GoodAnswersTextView.setText("Good answers : "+ score);
+            questionTextView.setText("Finished");
+            ansA.setText("");
+            ansB.setText("");
+            ansC.setText("");
+            ansD.setText("");
+            ansA.setOnClickListener(this);
+            ansB.setOnClickListener(this);
+            ansC.setOnClickListener(this);
+            ansD.setOnClickListener(this);
+    }
 
 }
