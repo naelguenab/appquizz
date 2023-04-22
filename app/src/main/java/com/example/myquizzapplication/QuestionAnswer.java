@@ -1,13 +1,8 @@
 package com.example.myquizzapplication;
 
-import java.io.OptionalDataException;
-
 public class QuestionAnswer {
 
-    public static OptionalDataException question;
-    public static int[][] choices;
-
-    public static class QuestionAnswer {
+    public static class questionAnswer {
 
         public static String question[] = {
                 "En quelle année le Titanic a-t-il coulé dans l'océan Atlantique le 15 avril, lors de son premier voyage au départ de Southampton?",

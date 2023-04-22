@@ -9,14 +9,16 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView totalQuestionsTextView;
+    TextView GoodAnswersTextView;
     TextView questionTextView;
     Button ansA,ansB,ansC,ansD;
     Button submitbtn;
 
     int score =0;
-    int totalQuestion = QuestionAnswer.question.length;
+    int totalQuestion = QuestionAnswer.questionAnswer.question.length;
     int currentQuestionIndex =0;
     String selectedAnswer ="";
+
 
 
 
@@ -24,20 +26,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         totalQuestionsTextView = findViewById(R.id.total_question);
+        GoodAnswersTextView = findViewById(R.id.good_answers);
         questionTextView = findViewById(R.id.question);
         ansA = findViewById(R.id.ans_A);
         ansB = findViewById(R.id.ans_B);
         ansC = findViewById(R.id.ans_C);
+        ansD = findViewById(R.id.ans_D);
         submitbtn = findViewById(R.id.submit_btn);
 
 
-        ansA.setOnClickListener(this);
-        ansB.setOnClickListener(this);
-        ansC.setOnClickListener(this);
-        ansD.setOnClickListener(this);
+        ansA.setOnClickListener(submitOnclickList);
+        ansB.setOnClickListener(submitOnclickList);
+        ansC.setOnClickListener(submitOnclickList);
+        ansD.setOnClickListener(submitOnclickList);
         submitbtn.setOnClickListener(this);
 
-        totalQuestionsTextView.setText("Total question :"+totalQuestion);
+        totalQuestionsTextView.setText("Total question : "+totalQuestion);
 
         loadNewQuestion();
 
@@ -49,13 +53,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void loadNewQuestion(){
-        questionTextView.setText(QuestionAnswer.question[currentQuestionIndex]);
-        ansA.setText(QuestionAnswer.choices[currentQuestionIndex][0]);
-        ansB.setText(QuestionAnswer.choices[currentQuestionIndex][1]);
-        ansC.setText(QuestionAnswer.choices[currentQuestionIndex][2]);
-        ansD.setText(QuestionAnswer.choices[currentQuestionIndex][3]);
+        GoodAnswersTextView.setText("Good answers : "+ score);
+        questionTextView.setText(QuestionAnswer.questionAnswer.question[currentQuestionIndex]);
+        ansA.setText(QuestionAnswer.questionAnswer.choices[currentQuestionIndex][0]);
+        ansB.setText(QuestionAnswer.questionAnswer.choices[currentQuestionIndex][1]);
+        ansC.setText(QuestionAnswer.questionAnswer.choices[currentQuestionIndex][2]);
+        ansD.setText(QuestionAnswer.questionAnswer.choices[currentQuestionIndex][3]);
 
     }
 
+    private  View.OnClickListener submitOnclickList = view -> {
+        String answer = "";
+        switch(view.getId()){
+            case R.id.ans_A: answer = (String) ansA.getText();break;
+            case R.id.ans_B: answer = (String) ansB.getText();break;
+            case R.id.ans_C: answer = (String) ansC.getText();break;
+            case R.id.ans_D: answer = (String) ansD.getText();break;
+        }
+
+        if (QuestionAnswer.questionAnswer.correctAnswers[currentQuestionIndex].equals(answer)){
+            ++score;
+            ++currentQuestionIndex;
+            loadNewQuestion();
+        }
+    };
 
 }
